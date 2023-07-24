@@ -6,7 +6,8 @@ from .serializers import BookSerializer
 # Create your views here.
 from rest_framework import status
 from rest_framework import generics
-
+from .permissions import IsOwnerPermission
+from rest_framework.permissions import IsAuthenticated
 # class AllBookView(generics.ListAPIView):
 #     queryset = BookModel.objects.all()
 #     serializer_class = BookSerializer
@@ -28,22 +29,13 @@ from rest_framework import generics
 class AllCreateBookView(generics.ListCreateAPIView):
     queryset = BookModel.objects.all()
     serializer_class = BookSerializer
+    permission_classes = (IsAuthenticated,)
 
-# class DetailBookView(generics.RetrieveAPIView):
-#     queryset = BookModel.objects.all()
-#     serializer_class = BookSerializer
-
-# class UpdateBookView(generics.UpdateAPIView):
-#     queryset = BookModel.objects.all()
-#     serializer_class = BookSerializer
-
-# class DeleteBookView(generics.DestroyAPIView):
-#     queryset = BookModel.objects.all()
-#     serializer_class = BookSerializer
 
 class DetailUpdateDeleteApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookModel.objects.all()
     serializer_class = BookSerializer
+    permission_classes = (IsOwnerPermission,)
 
 # class DetailBookView(APIView):
 #     def get(self,request,*args,**kwargs):
